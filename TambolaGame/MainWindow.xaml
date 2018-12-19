@@ -4,9 +4,27 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TambolaGame"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        mc:Ignorable="d" WindowState="Maximized"
+        Title="MainWindow">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+            
+        </StackPanel>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Orientation="Vertical">
+            <Border BorderBrush="White" BorderThickness="5" Height="300" Width="300" CornerRadius="190" Background="Black">
+                <Border.Effect>
+                    <DropShadowEffect Direction="267" BlurRadius="64"/>
+                </Border.Effect>
+                <TextBlock x:Name="tbMainNumbers" Text="100" VerticalAlignment="Center" FontSize="125" HorizontalAlignment="Center" Foreground="White"/>
+            </Border>
+            <TextBlock x:Name="tbMainNumberEnglish" VerticalAlignment="Center" 
+                       HorizontalAlignment="Center" Text="Eighty Eight" FontSize="90"></TextBlock>
+        </StackPanel>
         
     </Grid>
 </Window>

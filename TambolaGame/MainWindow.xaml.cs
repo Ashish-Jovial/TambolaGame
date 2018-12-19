@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,26 +21,34 @@ namespace TambolaGame
     /// </summary>
     public partial class MainWindow : Window
     {
+        App thisApp = (App)Application.Current;
         public MainWindow()
         {
             InitializeComponent();
-            List<string> lstList = new List<string>();
-            RandomNumberGeneration randomNumber = new RandomNumberGeneration(true);
+            Dictionary<string,string> lstList = new Dictionary<string,string>();
+            RandomNumberGeneration randomNumber = new RandomNumberGeneration();
             for (int i = 0; i < 100; i++)
             {
                 string record = randomNumber.GetNumber();
-
-                //Console.WriteLine(record);
                 string[] x = record.Split(new char[] { ' ' });
-                lstList.Add(x[1]);
+                GetNumerCombination(x, ref lstList);
             }
-            //Console.WriteLine("--------------record numbers----------------");
-            lstList.Sort();
-            foreach (var VARIABLE in lstList)
+        }
+
+        private void GetNumerCombination(string[] x,ref Dictionary<string, string> lstList)
+        {
+            string number, name;
+            if(x.Length>3)
             {
-                //Console.WriteLine(VARIABLE);
+                number = x[1];
+                name = x[2] + " " + x[3];
             }
-            //Console.Read();
+            else
+            {
+                number = x[1];
+                name = x[2];
+            }
+            lstList.Add(number, name);
         }
     }
 }

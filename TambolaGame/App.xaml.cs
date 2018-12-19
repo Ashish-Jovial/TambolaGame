@@ -13,5 +13,6 @@ namespace TambolaGame
     /// </summary>
     public partial class App : Application
     {
+        public bool IsRunningFirstTime = true;
     }
 }

@@ -3,23 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace TambolaGame
 {
     public class RandomNumberGeneration
     {
+        App thisApp = (App)Application.Current;
         private Dictionary<int, string> dictionary = new Dictionary<int, string>();
         private HashSet<int> _fetchNumber = new HashSet<int>();
         private Random random = new Random();
         private readonly bool isRequired = false;
-        public RandomNumberGeneration(bool isNumberStringRequired)
+        public RandomNumberGeneration()
         {
-            this.isRequired = isNumberStringRequired;
-            if (isRequired)
-            {
-                NumberStringCollection();
-            }
-            else
+            if (thisApp.IsRunningFirstTime)
             {
                 NumberStringCollection();
             }
@@ -68,11 +65,6 @@ namespace TambolaGame
 
         private void NumberStringCollection()
         {
-            if (!isRequired)
-            {
-                dictionary.Clear();
-                return;
-            }
             dictionary.Add(1, "One");
             dictionary.Add(2, "Two");
             dictionary.Add(3, "Three");
@@ -173,7 +165,7 @@ namespace TambolaGame
             dictionary.Add(98, "Ninty Eight");
             dictionary.Add(99, "Ninty Nine");
             dictionary.Add(100, "One Hundred");
-
+            thisApp.IsRunningFirstTime = false;
         }
     }
 }
