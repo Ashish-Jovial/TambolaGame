@@ -4,27 +4,48 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TambolaGame"
+        xmlns:vm="clr-namespace:TambolaGame.ViewModels"
         mc:Ignorable="d" WindowState="Maximized"
         Title="MainWindow">
-    <Grid>
+    <Window.Resources>
+        <vm:ViewModelLocator x:Key="Locator"/>
+    </Window.Resources>
+    <Grid  DataContext="{Binding numbersViewModel, Source={StaticResource Locator}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" Grid.Column="0" Height="50" VerticalAlignment="Top">
+            <StackPanel.Background>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="#FF56188E" Offset="1"/>
+                    <GradientStop Color="#FF972BF9"/>
+                </LinearGradientBrush>
+            </StackPanel.Background>
+            <TextBlock Text="Next number coming in " FontSize="25" Foreground="White" FontWeight="Bold" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Text="{Binding TimerTicks, Mode=TwoWay}" FontSize="25" Foreground="White" FontWeight="Bold" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Text=" Seconds" FontSize="25" Foreground="White" FontWeight="Bold" VerticalAlignment="Center"></TextBlock>
+        </StackPanel>
+        <Border Margin="10,50" BorderBrush="White" Grid.Row="1" VerticalAlignment="Top" Grid.Column="1" BorderThickness="5" Height="300" Width="300" CornerRadius="190" Background="{Binding OutColor, Mode=TwoWay}">
+            <Border.Effect>
+                <DropShadowEffect Direction="267" BlurRadius="100"/>
+            </Border.Effect>
+            <TextBlock x:Name="tbMainNumbers" Text="{Binding OutNumber, Mode=TwoWay}" VerticalAlignment="Center" FontSize="125" HorizontalAlignment="Center" Foreground="White">
+                
+            </TextBlock>
+        </Border>
+        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="tbMainNumberEnglish" Foreground="{Binding OutColor, Mode=TwoWay}" VerticalAlignment="Center" 
+                       HorizontalAlignment="Center" Text="{Binding OutNumberString, Mode=TwoWay}" FontSize="90">
+            <TextBlock.Effect>
+                <DropShadowEffect Direction="260" BlurRadius="7"/>
+            </TextBlock.Effect>
             
-        </StackPanel>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Orientation="Vertical">
-            <Border BorderBrush="White" BorderThickness="5" Height="300" Width="300" CornerRadius="190" Background="Black">
-                <Border.Effect>
-                    <DropShadowEffect Direction="267" BlurRadius="64"/>
-                </Border.Effect>
-                <TextBlock x:Name="tbMainNumbers" Text="100" VerticalAlignment="Center" FontSize="125" HorizontalAlignment="Center" Foreground="White"/>
-            </Border>
-            <TextBlock x:Name="tbMainNumberEnglish" VerticalAlignment="Center" 
-                       HorizontalAlignment="Center" Text="Eighty Eight" FontSize="90"></TextBlock>
-        </StackPanel>
-        
+        </TextBlock>
     </Grid>
 </Window>

@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Media;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Threading;
+using TambolaGame.HelperClasses;
 
 namespace TambolaGame
 {
@@ -21,34 +13,58 @@ namespace TambolaGame
     /// </summary>
     public partial class MainWindow : Window
     {
-        App thisApp = (App)Application.Current;
+        private Random rnd = new Random();
+        private int increment = 10;
+        private int counter = 0;
+        bool isFirstTime = false;
+        private App thisApp = (App)Application.Current;
+        private MediaPlayer mediaPlayer = new MediaPlayer();
+        private NumberLogic numberLogic = null;
         public MainWindow()
         {
             InitializeComponent();
-            Dictionary<string,string> lstList = new Dictionary<string,string>();
-            RandomNumberGeneration randomNumber = new RandomNumberGeneration();
-            for (int i = 0; i < 100; i++)
-            {
-                string record = randomNumber.GetNumber();
-                string[] x = record.Split(new char[] { ' ' });
-                GetNumerCombination(x, ref lstList);
-            }
+            mediaPlayer.Open(new Uri(@"C:\Users\ashishjain06\source\TambolaGame\TambolaGame\Assets\Countdown-timer.mp3"));
+            numberLogic = new NumberLogic();
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += timer_Tick;
+            timer.Start();
         }
 
-        private void GetNumerCombination(string[] x,ref Dictionary<string, string> lstList)
+        private void timer_Tick(object sender, EventArgs e)
         {
-            string number, name;
-            if(x.Length>3)
+            mediaPlayer.Play();
+            increment--;
+            thisApp.numbersViewModel.TimerTicks = increment;
+            if (!isFirstTime)
             {
-                number = x[1];
-                name = x[2] + " " + x[3];
+                NumberAssignment(counter);
+                isFirstTime = true;
             }
-            else
+            if (increment == 0)
             {
-                number = x[1];
-                name = x[2];
+                counter++;
+                NumberAssignment(counter);
+                mediaPlayer.Stop();
             }
-            lstList.Add(number, name);
+
+        }
+        private void NumberAssignment(int count)
+        {
+            
+            foreach (var x in thisApp.numbersViewModel.OutNumbers.Select((Entry, Index) => new { Entry, count }))
+            {
+                thisApp.numbersViewModel.OutNumber = Convert.ToInt32(x.Entry.Key);
+                thisApp.numbersViewModel.OutNumberString = x.Entry.Value.ToString();
+                SetBackgroundColor();
+                increment = 10;
+                break;
+            }
+        }
+        private void SetBackgroundColor()
+        {
+            Brush brush = new SolidColorBrush(Color.FromRgb((byte)rnd.Next(0, 256), (byte)rnd.Next(0, 256), (byte)rnd.Next(0, 256)));
+            thisApp.numbersViewModel.OutColor = brush;
         }
     }
 }
