@@ -54,8 +54,8 @@ namespace TambolaGame
             
             foreach (var x in thisApp.numbersViewModel.OutNumbers.Select((Entry, Index) => new { Entry, count }))
             {
-                thisApp.numbersViewModel.OutNumber = Convert.ToInt32(x.Entry.Key);
-                thisApp.numbersViewModel.OutNumberString = x.Entry.Value.ToString();
+                thisApp.numbersViewModel.OutNumber = Convert.ToInt32(thisApp.numbersViewModel.OutNumbers.ElementAt(count).Key);
+                thisApp.numbersViewModel.OutNumberString = thisApp.numbersViewModel.OutNumbers.ElementAt(count).Value;
                 SetBackgroundColor();
                 increment = 10;
                 break;

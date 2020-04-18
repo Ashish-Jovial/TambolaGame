@@ -33,12 +33,20 @@
             <TextBlock Text=" Seconds" FontSize="25" Foreground="White" FontWeight="Bold" VerticalAlignment="Center"></TextBlock>
         </StackPanel>
         <Border Margin="10,50" BorderBrush="White" Grid.Row="1" VerticalAlignment="Top" Grid.Column="1" BorderThickness="5" Height="300" Width="300" CornerRadius="190" Background="{Binding OutColor, Mode=TwoWay}">
+            <Border.Resources>
+                <DropShadowEffect x:Key="glowEffect" BlurRadius="30" Opacity="1" ShadowDepth="0" Color="Red"></DropShadowEffect>
+            </Border.Resources>
+            <Border Effect="{StaticResource glowEffect}">
+                <Border Effect="{StaticResource glowEffect}">
+                    <TextBlock x:Name="tbMainNumbers" Text="{Binding OutNumber, Mode=TwoWay}" VerticalAlignment="Center" FontSize="125" HorizontalAlignment="Center" Foreground="White">
+
+                    </TextBlock>
+                </Border>
+            </Border>
             <Border.Effect>
                 <DropShadowEffect Direction="267" BlurRadius="100"/>
             </Border.Effect>
-            <TextBlock x:Name="tbMainNumbers" Text="{Binding OutNumber, Mode=TwoWay}" VerticalAlignment="Center" FontSize="125" HorizontalAlignment="Center" Foreground="White">
-                
-            </TextBlock>
+            
         </Border>
         <TextBlock Grid.Row="2" Grid.Column="1" x:Name="tbMainNumberEnglish" Foreground="{Binding OutColor, Mode=TwoWay}" VerticalAlignment="Center" 
                        HorizontalAlignment="Center" Text="{Binding OutNumberString, Mode=TwoWay}" FontSize="90">
